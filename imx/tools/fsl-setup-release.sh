@@ -165,6 +165,17 @@ echo "BBLAYERS += \" \${BSPDIR}/sources/meta-openembedded/meta-python \"" >> $BU
 echo "BBLAYERS += \" \${BSPDIR}/sources/meta-openembedded/meta-filesystems \"" >> $BUILD_DIR/conf/bblayers.conf
 
 echo "BBLAYERS += \" \${BSPDIR}/sources/meta-qt5 \"" >> $BUILD_DIR/conf/bblayers.conf
+# Add virtualization
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-virtualization\"" >> $BUILD_DIR/conf/bblayers.conf
+
+# Append features to local.conf
+echo "" >> $BUILD_DIR/conf/local.conf
+echo "DISTRO_FEATURES_append = \" optee virtualization kvm systemd\"" >> $BUILD_DIR/conf/local.conf
+echo "IMAGE_INSTALL_append = \" git cmake apt tmux openssh packagegroup-core-buildessential opkg docker libvirt qemu libxslt python-distutils-extra python3-distutils-extra python-pip python3-pip python-setuptools python3-setuptools\"" >> $BUILD_DIR/conf/local.conf
+
+echo "" >> $BUILD_DIR/conf/local.conf
+echo "PARALLEL_MAKE ?= \"-j 8\"" >> $BUILD_DIR/conf/local.conf
+echo "BB_NUMBER_THREADS ?= \"8\"" >> $BUILD_DIR/conf/local.conf
 
 echo BSPDIR=$BSPDIR
 echo BUILD_DIR=$BUILD_DIR
